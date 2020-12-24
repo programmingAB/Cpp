@@ -12,6 +12,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <vector>
+#include <mutex>
 using namespace std;
 using namespace std::chrono;
 
@@ -44,6 +45,10 @@ enum setDufficult { easy, normal, hard, unreal };
 class Game/*: public resultsType*/
 {
 
+	
+	//string debug;
+	bool printName = true;
+	bool cleanscr = true; // условие чистить ли экран
 	vector <resultsType> vectorRes;
 	int countRightAnsw=0;
 	bool gStart = true; // булевская паеременная отвечающая за обнуление результатов при повторном входе в игру невыходя из программы
@@ -59,7 +64,7 @@ class Game/*: public resultsType*/
 	int c = -1;
 	int d = -1;
 	int x = -1;
-	int seconds = 10;
+	int seconds = 100;
 	string name="";
 	setDufficult sD = easy;
 	int answer, answerPlayer;

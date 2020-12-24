@@ -14,8 +14,14 @@ void Game::gameMenuMain()
 	do {
 		char optionMass[256];
 		const string optionValues = "12340pbahePBAHE";
-		system("cls");
-		cout << "Hello, " << name << "! Select the option\n"
+		if (cleanscr)
+			system("cls");
+		if (printName)
+		{
+			cout << "Hello, " << name << "!" << endl;
+			printName = !printName;
+		}
+			cout << "Select the option\n"
 			"1 ---> (p)lay game\n"
 			"2 ---> (b)est score\n"
 			"3 ---> (a)bout this game\n"
@@ -29,6 +35,7 @@ void Game::gameMenuMain()
 			option = optionMass[0];
 			break;
 		}															 //нас интересует только первый символ в массиве
+		system("cls");
 	} while (true);
 	switch (option)
 	{
@@ -41,23 +48,41 @@ void Game::gameMenuMain()
 	case '2':
 	case 'b':
 	{
+		system("cls");
 		cout << "Best Score\n";
-
+		cleanscr = false;
 		bestScore();
 		break;
 	}
 	case '3':
 	case 'a':
-		cout << "This is a simlpe game about...\n";
+		system("cls");
+		cout << "This is a simlpe game...\n\n";
+		cleanscr = false;
+
+		gameMenuMain();
 		break;
 	case '4':
 	case 'h':
-		cout << "Help text\n";
+		system("cls");
+		cleanscr = false;
+		cout <<
+			"------------------------\n"
+			"1 wrong answer = -1 live\n"
+			"3 right answer = +1 live\n"
+			"right answer -------->\n"
+			"easy game: -> +5 seconds\n"
+			"normal game: -> +10 seconds\n"
+			"hard game: -> +20 seconds\n"
+			"------------------------\n\n";
+		gameMenuMain();
 		break;
 	case '0':
 	case 'e':
 		break;
-	}
+
+		
+	};
 }
 
 void Game::gameMenuPlay()
@@ -97,7 +122,7 @@ void Game::gameMenuPlay()
 		break;
 	case '0':
 	case 'b':
-		gameMenuMain();
+		cleanscr = true;
 		gameMenuMain();
 		break;
 	}
@@ -122,6 +147,7 @@ void Game::fGame()
 
 void Game::fTimer()
 {
+	
 	while (true)
 	{
 		system("cls");
@@ -280,7 +306,7 @@ void Game::normalGameDisplay()
 		c = gen() % 10 + 1 + lvl;
 		d = gen() % 10 + 1 + lvl;
 	}
-	switch (option)
+	switch (6)//option)
 	{
 	case 0:
 		cout << "(" << a << " + " << b << ")" << "*" << c * d << "/" << d << " = ";
@@ -311,18 +337,21 @@ void Game::normalGameDisplay()
 		double d1, d2;
 		int temp = 0;
 		temp = d % 4 + 2; // для удобства
-		if (((d % 4) + 2 == 2) && ((a + b) % 2 != 0)) // проверка на нечетность
+		if ((temp == 2) && ((a + b) % 2 == 0)) // проверка на нечетность
 		{
 			d1 = round(double(a) * b / temp) - 1; //при делении на два остаток = 0.5, поэтому функция постоянно округляет в большую сторону. Одно значение уменшаем, другое оставляем
 			d2 = round(double(a) * b / temp);
+			//debug = "in if";
 		}
 		else
 		{
 			d1 = round(double(a) * b / temp);
 			d2 = round(double(a) * b / temp * (temp - 1)); // умножаем на чсилитель
+			//debug = "in else";
 		}
 		cout << "(" << d1 << "+" << d2 << ")" << "/" << b << "+" << c + d << "=";
 		answer = (d1 + d2) / b + c + d;
+		//cout << endl << debug << " " << answer << " a:"<<a<<" b:"<< b << " d:" <<d<< endl;
 	}
 	break;
 	case 7:
@@ -341,7 +370,7 @@ void Game::normalGameDisplay()
 		cout << "(" << d1 << " + " << d2 << ")" << "/" << b << " - " << c + d << " = ";
 
 		answer = ((d1 + d2) / b) - (c + d);
-		cout << endl << answer << ":answer" << endl;
+		//cout << endl << answer << ":answer" << endl;
 		break;
 
 
@@ -369,6 +398,8 @@ void Game::initMassHardGame()
 			switch (i)
 			{
 			case 0:
+				buffer.str(""); // очищаем буффер т.к в нем остаются данные от записи в файл
+				buffer.clear();
 				buffer << "(" << a << " + " << b << ")" << "*" << c * d << "/" << d;
 				Output[i] = buffer.str();
 				answerMass[i] = (a + b) * c * d / d;
@@ -393,6 +424,7 @@ void Game::initMassHardGame()
 				buffer << a * c << "/" << c << " - " << c << "*" << d;
 				Output[i] = buffer.str();
 				answerMass[i] = a * c / c - c * d;
+				buffer.str("");
 				buffer.clear();
 				break;
 			case 4:
@@ -414,7 +446,7 @@ void Game::initMassHardGame()
 				double d1, d2;
 				int temp = 0;
 				temp = d % 4 + 2; // для удобства
-				if (((d % 4) + 2 == 2) && ((a + b) % 2 != 0)) // проверка на нечетность
+				if (((d % 4) + 2 == 2) && ((a + b) % 2 == 0)) // проверка на четность
 				{
 					d1 = round(double(a) * b / temp) - 1; //при делении на два остаток = 0.5, поэтому функция постоянно округляет в большую сторону. Одно значение уменшаем, другое оставляем
 					d2 = round(double(a) * b / temp);
@@ -470,7 +502,8 @@ void Game::hardGameDisplay()
 		cout << Output[option] << " - " << Output[optionHard] << " = " << endl;
 		answer = answerMass[option] - answerMass[optionHard];
 	}
-	cout << answer << endl;
+	/*cout << answer << endl;
+	cout << "Output[" << option << "] " << optionHard % 2 << " Output[" << optionHard << "]";*/
 	//cout << lvl << endl;
 
 } 
@@ -533,16 +566,20 @@ void Game::gameOver()
 	{
 	case '1':
 	case 'p':
+	case 'P':
 		initialisation();
 		fGame();
 		break;
 	case '2':
-	case 'b':
+	case 'm':
+	case 'M':
+		system("cls");
 		gStart = true;
 		gameMenuMain();
 		break;
 	case '0':
 	case 'e':
+	case 'E':
 		break;
 	}
 	
@@ -581,51 +618,62 @@ void Game::outputFromFile(ifstream& csv_i)
 	bubbleSort(vectorRes);
 	for (int i = 0; i < vectorRes.size(); i++)
 	{
-		cout << "Name: " << setw(8) << left << vectorRes.at(i).nameRes << " Lvl: " << setw(3) << vectorRes.at(i).lvlRes << " Date/Time: " << vectorRes.at(i).dateRes << endl;
+		if (vectorRes.at(i).nameRes == "")
+			return;//проверка на пустую строку из файла (если csv не инициализирован, то читается плохое значение. Тут мы его отбрасываем
+		cout << "Name: " << setw(8) << left << vectorRes.at(i).nameRes << " Lvl: " << setw(3) << vectorRes.at(i).lvlRes << " Date: " << vectorRes.at(i).dateRes << endl;
 	}
 }
 
 void Game::bestScore()
 {
+
 	ifstream csv_i_e("results_easy.csv");
 	ifstream csv_i_n("results_normal.csv");
 	ifstream csv_i_h("results_hard.csv");
 //	istringstream csv_i_stream;
-	cout << "----------------Easy-------------------\n";
-	outputFromFile(csv_i_e);
-	cout << "----------------Normal-------------------\n";
-	outputFromFile(csv_i_n);
-	cout << "----------------Hard-------------------\n";
-	outputFromFile(csv_i_h);
-	
-
-
-	do {
-		char optionMass[256];
-		const string optionValues = "10mMeE";
-		//system("cls");
-		cout << "Game over. Answer #" << lvl << endl;
-		cout << "Press:\n1 ---> (m)enu\n"
-				"0 ---> (e)xit\n";
-		cout << "Make a option\n";
-		cin >> optionMass;
-		if (count(optionValues.begin(), optionValues.end(), optionMass[0]) != 0) //Проверка на входимость введенного символа option в набор допустимых символов в optionValues, при этом
-		{
-			option = optionMass[0];
-			break;
-		}															 //нас интересует только первый символ в массиве
-	} while (true);
-	switch (option)
+	if (csv_i_e || csv_i_n || csv_i_h)
 	{
-	case '1':
-	case 'm':
-		gStart = true;
-		gameMenuMain();
-		break;
-	case '0':
-	case 'e':
-		break;
+		cout << "----------------Easy-------------------\n";
+		outputFromFile(csv_i_e);
+		cout << "----------------Normal-------------------\n";
+		outputFromFile(csv_i_n);
+		cout << "----------------Hard-------------------\n";
+		outputFromFile(csv_i_h);
 	}
+	else
+	{
+		cout << "Fail. Dates aren't created.\n";
+	};
+	cout << "\n";
+
+
+	//do {
+	//	char optionMass[256];
+	//	const string optionValues = "10mMeE";
+	//	//system("cls");
+	//	cout << "Game over. Answer #" << lvl << endl;
+	//	cout << "Press:\n1 ---> (m)enu\n"
+	//			"0 ---> (e)xit\n";
+	//	cout << "Make a option\n";
+	//	cin >> optionMass;
+	//	if (count(optionValues.begin(), optionValues.end(), optionMass[0]) != 0) //Проверка на входимость введенного символа option в набор допустимых символов в optionValues, при этом
+	//	{
+	//		option = optionMass[0];
+	//		break;
+	//	}															 //нас интересует только первый символ в массиве
+	//} while (true);
+	//switch (option)
+	//{
+	//case '1':
+	//case 'm':
+	//	gStart = true;
+	//	gameMenuMain();
+	//	break;
+	//case '0':
+	//case 'e':
+	//	break;
+	//}
+	gameMenuMain();
 }
 
 void Game::bubbleSort(vector <resultsType>& vec)
