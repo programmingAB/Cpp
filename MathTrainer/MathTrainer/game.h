@@ -64,7 +64,7 @@ class Game/*: public resultsType*/
 	int c = -1;
 	int d = -1;
 	int x = -1;
-	int seconds = 100;
+	int seconds = 10000;
 	string name="";
 	setDufficult sD = easy;
 	int answer, answerPlayer;

@@ -6,7 +6,7 @@ void Game::gameMenuMain()
 	char option;
 	if (name.empty())
 	{
-		cout << "Welcome! Write please your name.\n";
+		cout << "Welcome! Enter please your name.\n";
 		cin >> name;
 		system("cls");
 	}
@@ -21,8 +21,8 @@ void Game::gameMenuMain()
 			cout << "Hello, " << name << "!" << endl;
 			printName = !printName;
 		}
-			cout << "Select the option\n"
-			"1 ---> (p)lay game\n"
+			cout << "Select a option\n"
+			"1 ---> (p)lay the game\n"
 			"2 ---> (b)est score\n"
 			"3 ---> (a)bout this game\n"
 			"4 ---> (h)elp\n"
@@ -170,7 +170,7 @@ void Game::fTimer()
 
 		if (seconds == -1)
 		{
-			cout << "\nTime is over. Right answer = " << answer << endl;
+			cout << "\nTime is over. Right answer is " << answer << endl;
 			cout << "Press any key\n";
 			break;
 		}
@@ -446,16 +446,18 @@ void Game::initMassHardGame()
 				double d1, d2;
 				int temp = 0;
 				temp = d % 4 + 2; // для удобства
-				if (((d % 4) + 2 == 2) && ((a + b) % 2 == 0)) // проверка на четность
+				if (((d % 4) + 2 == 2) && ((a + b) % 2 != 0)) // проверка на четность
+				//if ((a + b) % 2 == 0)
 				{
-					d1 = round(double(a) * b / temp) - 1; //при делении на два остаток = 0.5, поэтому функция постоянно округляет в большую сторону. Одно значение уменшаем, другое оставляем
+					d1 = round(double(a) * b / temp) - 2; //при делении на два остаток = 0.5, поэтому функция постоянно округляет в большую сторону. Одно значение уменшаем, другое оставляем
 					d2 = round(double(a) * b / temp);
 				}
+				
 				else
-				{
-					d1 = round(double(a) * b / temp);
-					d2 = round(double(a) * b / temp * (temp - 1)); // умножаем на чсилитель
-				}
+					{
+						d1 = round(double(a) * b / temp);
+						d2 = round(double(a) * b / temp * (temp - 1)); // умножаем на чсилитель
+					}
 				buffer << "(" << d1 << " + " << d2 << ")" << "/" << b << " + " << c + d;
 				Output[i] = buffer.str();
 				answerMass[i] = (d1 + d2) / b + c + d;
@@ -468,7 +470,7 @@ void Game::initMassHardGame()
 				int temp = d % 4 + 2; // для удобства
 				if (((d % 4) + 2 == 2) && ((a + b) % 2 != 0)) // проверка на нечетность
 				{
-					d1 = round(double(a) * b / temp) - 1; //при делении на два остаток = 0.5, поэтому функция постоянно округляет в большую сторону. Одно значение уменшаем, другое оставляем
+					d1 = round(double(a) * b / temp) - 2; //при делении на два остаток = 0.5, поэтому функция постоянно округляет в большую сторону. Одно значение уменшаем, другое оставляем
 					d2 = round(double(a) * b / temp);
 				}
 				else
@@ -492,6 +494,8 @@ void Game::initMassHardGame()
 void Game::hardGameDisplay()
 {
 	initMassHardGame();
+	if (option == optionHard) // недопускается наличие двух одинаковых выражений
+		return;
 	if (optionHard % 2 == 0)
 	{
 		cout << Output[option] << " + " << Output[optionHard] << " = " << endl;
@@ -502,9 +506,9 @@ void Game::hardGameDisplay()
 		cout << Output[option] << " - " << Output[optionHard] << " = " << endl;
 		answer = answerMass[option] - answerMass[optionHard];
 	}
-	/*cout << answer << endl;
-	cout << "Output[" << option << "] " << optionHard % 2 << " Output[" << optionHard << "]";*/
-	//cout << lvl << endl;
+	cout << answer << endl;
+	cout << "Output[" << option << "] " << optionHard % 2 << " Output[" << optionHard << "]"<<endl;
+	cout << lvl << endl;
 
 } 
 
