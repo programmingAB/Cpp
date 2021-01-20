@@ -1,32 +1,24 @@
+
 /*
-Программа должна переводить число, введенное с клавиатуры в метрах, в километры.
+Напишите программу , в которой по извесной начальной скорости V и времени полета тела T
+определяется угол aльфа под которым тело брошено по отношению к горизонту
+(воспользуйтесь соотношением a = arcsin(gT/2V) ).
 */
 
 #include <iostream>
+#include <cmath>
 using namespace std;
+
+#define g 9.8
 
 int main()
 {
 	setlocale(LC_ALL, "Russian");
-	double meter, km;
-	do {
-		cout << "Введите метры: ";
-		cin >> meter;
-		km = meter / 1000;
-		// 1 вариант -  toupper();
-		// cout<<char(toupper(letter);
-		// 2 вариант
-		cout << "Перевод в километры: " << endl;
-		if (meter > 0 && meter < 1)
-			cout << meter << " метра - " << km << " километра" << endl;
-		else if (meter == 1)
-			cout << meter << " метр - " << km << " километра" << endl;
-		else if (meter > 1 && meter < 5)
-			cout << meter << " метра - " << km << " километра" << endl;
-		else if (meter >= 5 && meter < 1000)
-			cout << meter << " метров - " << km << " километра" << endl;
-		else if (meter > 1000)
-			cout << meter << " метров - " << km << " километров" << endl;
-
-	} while (meter != -1);
+	int V = 0, T = 0;
+	cout << "Введите V: ";
+	cin >> V;
+	cout << "Введите T: ";
+	cin >> T;
+	cout << "Угол: " << asin(g * T / (2 * V)) * 180 / 3.14;
+	return 0;
 }

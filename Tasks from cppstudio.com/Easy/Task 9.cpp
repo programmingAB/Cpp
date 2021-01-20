@@ -1,26 +1,35 @@
 /*
-Составить программу, которая требует ввести два числа.
-Если первое число больше второго, то программа печатает слово больше.
-Если первое число меньше второго, то программа печатает слово меньше.
-А если числа равны, программа напечатает сообщение Эти числа равны.
+Дан одномерный массив, длину массива задаёт пользователь. 
+Вычислить сумму квадратов тех чисел, модуль которых превышает значение 2,5.
 */
 
 #include <iostream>
+#include <cmath>
 using namespace std;
+
 
 int main()
 {
 	setlocale(LC_ALL, "Russian");
-	int n1 = 0, n2 = 0;
-	cout << "Введите первое число" << endl;
-	cin >> n1;
-	cout << "Введите второе число" << endl;
-	cin >> n2;
-	if (n1 > n2)
-		cout << "Первое число больше второго";
-	else if (n1 < n2)
-		cout << "Второе число больше первого";
-	else
-		cout << "Числа равны";
+	int length = 0;
+	double sum = 0;
+	cout << "Input the lenght of the mass: "; cin >> length;
+	double* mass = new double[length];
+	for (int i = 0; i < length; i++)
+	{
+		cin >> *(mass + i);
+		if (abs(*(mass + i)) > 2.5)
+			continue;
+		sum += pow(*(mass + i), 2);
+	}
+	//for (int i = 0; i < length; i++)
+	//{
+	//	if (abs(*(mass + i)) > 2.5)
+	//		continue;
+	//	sum += pow(*(mass + i),2);
+	//}
+	cout << sum << endl;
+	delete[] mass;
 	return 0;
 }
+
