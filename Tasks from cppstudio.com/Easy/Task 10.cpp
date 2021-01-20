@@ -1,24 +1,21 @@
-
 /*
-Составить алгоритм увеличения всех трех, введённых с клавиатуры, переменных на 5,если среди них есть хотя бы две равные.
-В противном случае выдать ответ «равных нет».
+Вычислить значение выражения по формуле (все переменные принимают действительные значения):
+(1-tg x)^(ctg x)+ cos(x-y).
 */
 
 #include <iostream>
+#include <cmath>
 using namespace std;
+
+#define PI 3.14159265
 
 int main()
 {
 	setlocale(LC_ALL, "Russian");
-	int n1 = 0, n2 = 0, n3 = 0;
-	cout << "Введите три числа: ";
-	cin >> n1 >> n2 >> n3;
-	if ((n1 - (n2 - n3)) == n1 || (n2 - (n1 - n3)) == n2 || (n3 - (n2 - n1)) == n3)
-	{
-		n1 += 5;
-		n2 += 5;
-		n3 += 5;
-	}
-	cout << "1 число - " << n1 <<endl << "2 число - " << n2 << endl << "3 число - " << n3;
+	double angleX = 0, angleY = 0, answer = 0;
+	cout << "Input the angle X in degrees: "; cin >> angleX;
+	cout << "Input the angle Y in degrees: "; cin >> angleY;
+	answer = pow((1 - tan(angleX * PI / 180)), 1 / tan(angleX * PI / 180)) + cos(PI / 180 * (angleX - angleY));
+	cout << "Answer: " << answer;
 	return 0;
 }
