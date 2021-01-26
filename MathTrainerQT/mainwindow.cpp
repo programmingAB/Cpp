@@ -1,0 +1,46 @@
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+#include <QMessageBox>
+
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
+    , ui(new Ui::MainWindow)
+{
+    ui->setupUi(this);
+    ui->stackedWidget->setCurrentIndex(0);
+
+
+    ui->ListLevels->addItem("Easy");
+    ui->ListLevels->addItem("Normal");
+    ui->ListLevels->addItem("Hard");
+    ui->ListLevels->setCurrentRow(1);
+    ui->ListLevels->setAcceptDrops(0);
+
+
+    //ui->LstOperation->currentItem()
+}//
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+
+void MainWindow::on_ButtonStart_clicked()
+{
+    if (ui->InputName->text().isEmpty())
+            ui->labelWarning->setText("Input your name please");
+    else
+        ui->stackedWidget->setCurrentIndex(1);
+}
+
+void MainWindow::on_horizontalSlider_valueChanged(int value)
+{
+    //ui->progressBar->setValue(ui->horizontalSlider->value());
+}
+
+void MainWindow::on_ButtonBest_Score_clicked()
+{
+    QMessageBox::about(this, "Info", "The function has not yet been realized.");
+}
+
