@@ -13,5 +13,10 @@ int main(int argc, char *argv[])
     QString stylesheet = QLatin1String(file.readAll());
     a.setStyleSheet(stylesheet);
 
+
+
+
+
+
     return a.exec();
 }
