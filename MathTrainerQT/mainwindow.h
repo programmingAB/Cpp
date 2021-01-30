@@ -1,6 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#define ETS 30 //easy timer start
+#define ETS 2 //easy timer start
 #include <chart.h>
 #include <QMainWindow>
 #include <QtSql/QtSql>
@@ -44,18 +44,30 @@ private slots:
 
     void updateTime();
 
+    void on_ButtonBest_Score2_clicked();
+
 private:
     Ui::MainWindow *ui;
     QSqlDatabase con;
     QSqlQuery sqlDB;
     int gen1;
     int gen2;
-    int easyTimer=30;
+    int easyTimer=ETS;
     QTimer *tmr;
     int easyLvl=1;
     bool isPlaying=false;
-    int playerID=0;
+    //int playerID=0;
+    QString playerID;
     void testfunk();
+    int level=0;
+    QVector<double> VEasy;
+    QVector<double> VNormal;
+    QVector<double> VHard;
+    void initializeVectors(QString); // use results from DB to initialize Vectors
+    bool isEasy=false;
+    bool isNormal=false;
+    bool isHard=false;
+
 
 
 };

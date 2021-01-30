@@ -30,7 +30,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="Greeting">
        <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -188,12 +188,20 @@
               </property>
               <property name="maximumSize">
                <size>
-                <width>220</width>
+                <width>185</width>
                 <height>45</height>
                </size>
               </property>
+              <property name="font">
+               <font>
+                <stylestrategy>PreferDefault</stylestrategy>
+               </font>
+              </property>
               <property name="cursor" stdset="0">
                <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
               </property>
               <property name="verticalScrollBarPolicy">
                <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -257,13 +265,76 @@
            </spacer>
           </item>
           <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <spacer name="horizontalSpacer_5">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_7">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>OK</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_6">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="labelLevel">
+              <property name="text">
+               <string>Your level: </string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
              <widget class="QLabel" name="term">
               <property name="minimumSize">
                <size>
-                <width>250</width>
+                <width>160</width>
                 <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>150</width>
+                <height>16777215</height>
                </size>
               </property>
               <property name="frameShadow">
@@ -285,16 +356,19 @@
                 <height>16777215</height>
                </size>
               </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_2">
+              <property name="text">
+               <string>Check</string>
+              </property>
              </widget>
             </item>
            </layout>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_2">
-            <property name="text">
-             <string>Check</string>
-            </property>
-           </widget>
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_14">
@@ -329,6 +403,11 @@
                <font>
                 <family>Times New Roman</family>
                 <pointsize>9</pointsize>
+                <weight>50</weight>
+                <italic>false</italic>
+                <bold>false</bold>
+                <underline>false</underline>
+                <strikeout>false</strikeout>
                </font>
               </property>
               <property name="whatsThis">
@@ -336,6 +415,9 @@
               </property>
               <property name="layoutDirection">
                <enum>Qt::LeftToRight</enum>
+              </property>
+              <property name="autoFillBackground">
+               <bool>false</bool>
               </property>
               <property name="inputMethodHints">
                <set>Qt::ImhNone</set>
@@ -372,21 +454,9 @@
            </layout>
           </item>
           <item>
-           <widget class="QProgressBar" name="progressBar1">
-            <property name="cursor">
-             <cursorShape>BusyCursor</cursorShape>
-            </property>
-            <property name="maximum">
-             <number>30</number>
-            </property>
-            <property name="value">
-             <number>30</number>
-            </property>
-            <property name="textVisible">
-             <bool>false</bool>
-            </property>
-            <property name="invertedAppearance">
-             <bool>false</bool>
+           <widget class="QPushButton" name="ButtonBest_Score2">
+            <property name="text">
+             <string>PushButton</string>
             </property>
            </widget>
           </item>
@@ -424,10 +494,10 @@
        <widget class="QCustomPlot" name="plot" native="true">
         <property name="geometry">
          <rect>
-          <x>60</x>
-          <y>60</y>
-          <width>361</width>
-          <height>241</height>
+          <x>0</x>
+          <y>0</y>
+          <width>471</width>
+          <height>321</height>
          </rect>
         </property>
        </widget>

@@ -1,21 +1,24 @@
 QMainWindow
 {
-    background: qlineargradient(x1:1, y1:0, x2:0, y2:1, stop:0 white, stop: 0.7
-    rgba(220,217,121,0.65), stop:1 rgba(220,217,121,0.65))
+    background: qlineargradient(x1:1, y1:0, x2:0, y2:1,
+    stop: 0     #FFF1D8,
+    /*stop: 0.42 rgba(74,218,220,0.42),*/
+    stop: 1    	#FFEAC3)
 }
 
 QPushButton
 {
     padding: 4px 2px;
-    border: 2px groove rgba(120, 120, 120, .7);
-    border-radius: 10px;
+    border: 3px solid #B69A65/*rgba(120, 120, 120, .4)*/;
+    border-radius: 15px;
     font-family: "Comic Sans MS";
     font-size: 20px;
+    color: #594B32;
 }
 
 QPushButton:hover
 {
-    background: rgba(200, 200, 200, 0.5);
+    background: #FFEEC0;
 }
 
 QPushButton:pressed
@@ -32,9 +35,11 @@ QLineEdit
     border: 2px dashed rgba(120, 120, 120, .4);
 }
 
-QLabel
+QLabel#labelGameName
 {
-    font-size: 24px;
+    font-size: 32px;
+    color: #836F4A;
+    /*color: #A68342;*/
     font-family: "Comic Sans MS";
 }
 
@@ -42,7 +47,7 @@ QLabel#labelWarning
 {
     font-size: 24px;
     font-family: "Comic Sans MS";
-    color: red;
+    color: #FF7171;
 }
 QLabel#term
 {
@@ -51,25 +56,32 @@ QLabel#term
     font-family: "Comic Sans MS";
 }
 
+QLabel#label
+{
+    font-size: 28px;
+    color: #836F4A;
+    /*color: #A68342;*/
+    font-family: "Comic Sans MS";
+}
+
 QProgressBar
 {
-border: solid grey;
-border-radius: 15px;
-color: rgba(120, 120, 120, 0);
-
+    border: solid grey;
+    border-radius: 15px;
+    color: rgba(120, 120, 120, 0);
 }
 
 QProgressBar:chunk
 {
-background-color: rgba(166,153,0,1);
-border-radius :15px;
+    background-color: rgba(166,153,0,1);
+    border-radius :15px;
 }
 
 
 QListWidget#item:selected
 {
-background: rgba(166,153,0,1);
-border: 0px;
+    background: rgba(166,153,0,1);
+    border: 0px;
 }
 
 QListWidget
@@ -78,7 +90,7 @@ QListWidget
     border: 2px dashed rgba(120, 120, 120, .4);
     border-radius: 10px;
     font-family: "Comic Sans MS";
-    font-size: 22px;
+    font-size: 20px;
     background-color: transparent;
 }
 
