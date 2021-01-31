@@ -13,6 +13,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
     tmr=new QTimer(this);
 
+    ui->plot->addGraph();
+    ui->plot->addGraph();
+    ui->plot->addGraph();
+
     //SIGNALS
     connect(tmr, SIGNAL(timeout()), this, SLOT(updateTime()));
 
@@ -97,11 +101,8 @@ bool MainWindow::nameCheck(QString name)
             playerID=sqlDB.value(0).toString();
             initializeVectors(playerID);
             qDebug()<<"playerID: "<<playerID;
-            qDebug()<<"+";
             return true;
         }
-        else
-            qDebug()<<"-";
     }
      return false;
 }
@@ -125,20 +126,15 @@ void MainWindow::on_ButtonStart_clicked()
         //ui->labelWarning->setText("Input a another name");
         ui->stackedWidget->setCurrentIndex(1);
         ui->label->setText("Hello, "+(ui->InputName->text())/*+"!\n Choose your level \nand have fun playing!"*/);
-
-
-
-
-
-
     }
     else
     {
         sqlDB.exec("INSERT INTO players (name) VALUES ('"+(ui->InputName->text())+"')");
         nameCheck(ui->InputName->text());
-        sqlDB.exec("INSERT INTO results (ID, level) VALUES ('"+playerID+"', 'easy')");
-        sqlDB.exec("INSERT INTO results (ID, level) VALUES ('"+playerID+"', 'normal')");
-        sqlDB.exec("INSERT INTO results (ID, level) VALUES ('"+playerID+"', 'hard')");
+        sqlDB.exec("INSERT INTO results VALUES ('"+playerID+"', 'easy', 0, 0, 0, 0, 0 )");
+        sqlDB.exec("INSERT INTO results VALUES ('"+playerID+"', 'normal', 0, 0, 0, 0, 0 )");
+        sqlDB.exec("INSERT INTO results VALUES ('"+playerID+"', 'hard', 0, 0, 0, 0, 0 )");
+        initializeVectors(playerID);
         ui->stackedWidget->setCurrentIndex(1);
         ui->label->setText("Hello, "+(ui->InputName->text()));
     }
@@ -147,7 +143,10 @@ void MainWindow::on_ButtonStart_clicked()
 void MainWindow::on_ButtonBest_Score_clicked()
 {
     nameCheck(ui->InputName->text());
+    //ui->plot->clearGraphs();
+
     testfunk();
+    ui->label->setText("Hello, "+(ui->InputName->text())/*+g"!\n Choose your level \nand have fun playing!"*/);
     ui->stackedWidget->setCurrentIndex(2);
 }
 
@@ -163,6 +162,8 @@ void MainWindow::on_PlayButton_clicked()
             isHard=false;
             ui->lineAnswer->setText("");
             ui->lineAnswer->setFocus();
+            level=0;
+            ui->labelLevel->setText(QString::number(level));
             //easyTimer=30;
             ui->progressBar->setMinimum(0);
             ui->progressBar->setMaximum(ETS);
@@ -173,7 +174,7 @@ void MainWindow::on_PlayButton_clicked()
     }
 }
 
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_CheckButton_clicked()
 {
     QString Qanswer = ui->lineAnswer->text();
     int Ianswer=Qanswer.toInt();
@@ -205,7 +206,7 @@ void MainWindow::updateTime()
         if (!easyTimer)
         {
             tmr->stop();
-            QMessageBox::information(this, "Out of time", "time is out");
+            //QMessageBox::information(this, "Out of time", "time is out");
             isPlaying=false;
             easyTimer=ETS;
             ui->progressBar->setMaximum(easyTimer);
@@ -214,6 +215,7 @@ void MainWindow::updateTime()
             ui->term->setText("");
             ui->lineAnswer->setText("");
             VEasy.erase(VEasy.begin());
+            qDebug()<<"level is: "<<level;
             VEasy.push_back(level);
             sqlDB.exec( "update results set "
                         "game1="+QString::number(VEasy[4])+", "
@@ -223,56 +225,24 @@ void MainWindow::updateTime()
                         "game5="+QString::number(VEasy[0])+" "
                         "where level='easy' and ID="+playerID+""
                       );
+            qDebug()<<endl;
+            qDebug()<<"In updatetime()";
+            for (double d: VEasy)
+                qDebug()<<"VEasy: "<<d;
             /*sqlDB.exec("update results "
-                       "set game1="+QString::number(VEasy[4])+" "
+                       "setButtonStart game1="+QString::number(VEasy[4])+" "
 
                        "where level='easy' and ID="+playerID+"");*/
         }
     }
 }
 
-void MainWindow::testfunk()
-{
-    int size=10;
-    QVector<double> x(size), y(size);
-    for (int i=0; i<5;i++)
-    {
-        x[i]=i+1;
-    }
-    y={5,4,6,3,1};
 
-
-    ui->plot->xAxis->setRange(1,5);
-    ui->plot->yAxis->setRange(0,20);
-    //easy
-    ui->plot->addGraph();
-    ui->plot->graph(0)->setData(x, VEasy);
-    ui->plot->graph(0)->setName("Easy");
-
-    //normal
-    ui->plot->addGraph();
-    ui->plot->graph(1)->setPen(QPen(Qt::red));
-    ui->plot->graph(1)->setData(x, VNormal);
-    ui->plot->graph(1)->setName("Normal");
-
-    //hard
-    ui->plot->addGraph();
-    ui->plot->graph(2)->setPen(QPen(Qt::yellow));
-    ui->plot->graph(2)->setData(x, VHard);
-    ui->plot->graph(2)->setName("Hard");
-
-
-    ui->plot->legend->setVisible(true);
-
-
-
-
-}
 
 void MainWindow::initializeVectors(QString playerID)
 {
 
-    qDebug()<<"in initializeVectors function";
+
     //easy
     sqlDB.exec("SELECT * FROM results where level='easy' and ID="+playerID+"");
     while(sqlDB.next())
@@ -280,6 +250,9 @@ void MainWindow::initializeVectors(QString playerID)
         for (int i=2; i<=6; i++)
             VEasy.push_back(sqlDB.value(i).toInt());
     }
+    qDebug()<<"in initializeVectors function";
+    for (double d: VEasy)
+        qDebug()<<"VEasy: "<<d;
 
     //normal
     sqlDB.exec("SELECT * FROM results where level='normal' and ID="+playerID+"");
@@ -302,7 +275,57 @@ void MainWindow::initializeVectors(QString playerID)
 
 void MainWindow::on_ButtonBest_Score2_clicked()
 {
-    nameCheck(ui->InputName->text());
+    //nameCheck(ui->InputName->text());
     testfunk();
     ui->stackedWidget->setCurrentIndex(2);
+}
+
+void MainWindow::on_Start3_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+}
+
+
+void MainWindow::testfunk()
+{
+    ui->plot->replot();
+    //ui->plot->clearData();
+    qDebug()<<"In testfunk()";
+    QVector<double> x(5);
+    for (int i=0; i<5;i++)
+    {
+        x[i]=i+1;
+    }
+
+
+    ui->plot->xAxis->setRange(1,5);
+    ui->plot->yAxis->setRange(0,20);
+    //easy
+   // ui->plot->addGraph();
+    ui->plot->graph(0)->setData(x, VEasy);
+    ui->plot->graph(0)->setName("Easy");
+    ui->plot->replot();
+    ui->plot->update();
+    //normal
+    //ui->plot->addGraph();
+    ui->plot->graph(1)->setPen(QPen(Qt::red));
+    ui->plot->graph(1)->setData(x, VNormal);
+    ui->plot->graph(1)->setName("Normal");
+    ui->plot->replot();
+    ui->plot->update();
+    //hard
+    //ui->plot->addGraph();
+    ui->plot->graph(2)->setPen(QPen(Qt::yellow));
+    ui->plot->graph(2)->setData(x, VHard);
+    ui->plot->graph(2)->setName("Hard");
+    ui->plot->replot();
+    ui->plot->update();
+
+    ui->plot->legend->setVisible(true);
+
+    //VEasy.clear();
+    //x.clear();
+   // ui->plot->clearGraphs();
+
+
 }

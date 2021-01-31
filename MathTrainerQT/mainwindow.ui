@@ -30,7 +30,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="Greeting">
        <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -73,6 +73,16 @@
            </spacer>
           </item>
           <item>
+           <widget class="QLabel" name="labelWarning">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QLineEdit" name="InputName">
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -80,12 +90,9 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="labelWarning">
+           <widget class="QPushButton" name="ButtonStart">
             <property name="text">
-             <string/>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
+             <string>Start</string>
             </property>
            </widget>
           </item>
@@ -101,13 +108,6 @@
              </size>
             </property>
            </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="ButtonStart">
-            <property name="text">
-             <string>Start</string>
-            </property>
-           </widget>
           </item>
           <item>
            <widget class="QPushButton" name="ButtonBest_Score">
@@ -162,19 +162,6 @@
              <set>Qt::AlignCenter</set>
             </property>
            </widget>
-          </item>
-          <item>
-           <spacer name="verticalSpacer_4">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_12">
@@ -252,7 +239,7 @@
            </layout>
           </item>
           <item>
-           <spacer name="verticalSpacer_11">
+           <spacer name="verticalSpacer_4">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
@@ -362,7 +349,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_2">
+             <widget class="QPushButton" name="CheckButton">
               <property name="text">
                <string>Check</string>
               </property>
@@ -454,11 +441,17 @@
            </layout>
           </item>
           <item>
-           <widget class="QPushButton" name="ButtonBest_Score2">
-            <property name="text">
-             <string>PushButton</string>
+           <spacer name="verticalSpacer_11">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
             </property>
-           </widget>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
           </item>
           <item>
            <spacer name="verticalSpacer_3">
@@ -472,6 +465,13 @@
              </size>
             </property>
            </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="ButtonBest_Score2">
+            <property name="text">
+             <string>Best Score</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -491,16 +491,65 @@
        </layout>
       </widget>
       <widget class="QWidget" name="page">
-       <widget class="QCustomPlot" name="plot" native="true">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>471</width>
-          <height>321</height>
-         </rect>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_11">
+        <item>
+         <widget class="QCustomPlot" name="plot" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>280</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>600</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_7">
+          <item>
+           <spacer name="horizontalSpacer_8">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_7">
+            <item>
+             <widget class="QPushButton" name="Start3">
+              <property name="text">
+               <string>Start</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_9">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>

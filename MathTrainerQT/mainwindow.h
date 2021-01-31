@@ -1,6 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#define ETS 2 //easy timer start
+#define ETS 5 //easy timer start
 #include <chart.h>
 #include <QMainWindow>
 #include <QtSql/QtSql>
@@ -40,11 +40,13 @@ private slots:
 
     void on_PlayButton_clicked();
 
-    void on_pushButton_2_clicked();
+    void on_CheckButton_clicked();
 
     void updateTime();
 
     void on_ButtonBest_Score2_clicked();
+
+    void on_Start3_clicked();
 
 private:
     Ui::MainWindow *ui;
